@@ -55,6 +55,13 @@
 export default {
     async created() {
         this.watchScroll()
+        
+    },
+    mounted () {
+       this.$nextTick( () => {
+           console.log('hello')
+           load.loadImg.call(this)
+       }) 
     },
     methods,
     data() {
