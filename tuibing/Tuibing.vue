@@ -81,9 +81,8 @@ function run2 () { // 加倍玩法、即2^(n+1) -1
  
 }
 
-for (let i=0; i<1000;i++) {
-  run2()
-}
+// TODO：哪家赢我就买哪家的。
+
 
 
 export default {
