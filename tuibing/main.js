@@ -26,19 +26,24 @@ class Pos {
 class Player {
   constructor (money=0) {
     this.money = money
-    this.in = 0
+    this.in = 0,
+    this.loseArr = []
   }
   capital (x) { // 押的底钱。
     this.in = x
     this.money = this.money - x
     return this.in
   }
-  win (x) {
+  win (x) { // 赢钱之后，清掉loseArr，开始下一个周期。
     this.money = this.money + x 
+    this.loseArr = []
   }
   doubleLose () { // 双倍输，总钱数再减去本次压得钱
     this.money = this.money - this.in
     return this.in
+  }
+  lose () {
+    this.loseArr.push(this.in)
   }
 }
 
@@ -86,17 +91,23 @@ function win (x, y) {
   return temp
  }
 
- function zhuangWin(zhuoziPos) {
+ function zhuangWin(zhuoziPos, key) {
   zhuoziPos.sat.forEach( item => {
     zhuang.win(item[1])
   })
+  if (key === 1) {
+    zhuoziPos.sat[0][0].lose()
+  }
 }
 
-function zhuangWin2 (zhuoziPos) {
+function zhuangWin2 (zhuoziPos, key) {
   zhuoziPos.sat.forEach( item => {
     zhuang.win(item[1] * 2)
     item[0].doubleLose()
   })
+  if (key === 1) {
+    zhuoziPos.sat[0][0].lose()
+  }
 }
 
 function zhuangLose (zhuoziPos) {
@@ -118,9 +129,9 @@ function settle (zhuozi) {
     let winObj = win(zhuozi[0], zhuozi[i])
     if (winObj.win) { // 两种赢法，对子的赢和普通的赢。
       if (winObj.type === 1) { // 普通赢法。
-        zhuangWin(zhuozi[i])
+        zhuangWin(zhuozi[i], i)
       } else {
-        zhuangWin2(zhuozi[i])
+        zhuangWin2(zhuozi[i], i)
       }
     } else {
       if (winObj.type === 1) { // 普通输法。
