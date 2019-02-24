@@ -49,6 +49,7 @@ function run2 () { // 加倍玩法、即2^(n+1) -1
   if (main.player1.loseArr.length) {
     let length = main.player1.loseArr.length
     let temp = main.player1.loseArr[length - 1] + Math.pow(2, length)
+    if (temp > 500 ) temp = 500
     zhuozi[1].betMoney([main.player1, main.player1.capital(temp)])
   } else {
     zhuozi[1].betMoney([main.player1, main.player1.capital(1)])
